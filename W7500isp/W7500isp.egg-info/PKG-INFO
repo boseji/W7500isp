@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: W7500isp
+Version: 0.0.1
+Summary: W7500x isp tool package
+Home-page: https://github.com/javakys/
+Author: James YS Kim
+Author-email: javakys@gmail.com
+License: UNKNOWN
+Description: # W7500x isp tool package
+        
+        This is a W7500x isp tool package
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown

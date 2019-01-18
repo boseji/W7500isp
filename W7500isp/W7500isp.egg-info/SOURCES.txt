@@ -1,0 +1,6 @@
+README.md
+setup.py
+W7500isp.egg-info/PKG-INFO
+W7500isp.egg-info/SOURCES.txt
+W7500isp.egg-info/dependency_links.txt
+W7500isp.egg-info/top_level.txt

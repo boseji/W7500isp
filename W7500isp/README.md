@@ -71,6 +71,7 @@ isp.checkisp()
 isp.progLockFlag("00000000", "00000000")
 ```
 ### readLockFlag ###
+Code Flash와 Data Flash의 Read/Write Lock 상태를 읽는다.
 #### description ####
 #### systax ####
 #### example ####

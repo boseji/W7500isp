@@ -53,7 +53,7 @@ FLOCKR0
 FLOCKR1
 |31|30|29 ~ 4|3|2|1|0|
 |---|---|---|---|---|---|---|
-|CWL31|CWL30|...|CWL3|CWL2|CWL1|CWL0|
+|CWL31|CWL30|~|CWL3|CWL2|CWL1|CWL0|
 
 #### systax ####
 progLockFlag( *FLOCKR0_Cmd*, *FLOCKR1_Cmd* )

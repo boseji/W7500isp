@@ -285,5 +285,9 @@ class ispcmd(object):
                 bMismatched = True
         if not bMismatched:
             sys.stdout.write("Both are the same\r\n")
+            return True # Same
+        return False # Different
+
+        
 
         

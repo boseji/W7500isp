@@ -43,14 +43,14 @@ isp.checkisp()
 Code Flash와 Data Flash에 Read/Write Lock을 설정하거나 해제하는 함수이다.
 W7500(P)는 Flash Lock과 관련해서 FLOCK0와 FLOCK1 두개의 register를 가지고 있는데, 각 bit별로 관련된 Page가 다르다.
 
-FLOCKR0
+**FLOCKR0**
 
 |31|30|29 ~ 4|3|2|1|0|
 |---|---|---|---|---|---|---|
 |CRL|CBWLA|Reserved|DRL1|DRL0|DWL1|DWL0|
 
 
-FLOCKR1
+**FLOCKR1**
 
 |31|30|29 ~ 4|3|2|1|0|
 |---|---|---|---|---|---|---|
@@ -158,7 +158,7 @@ isp.eraseDataFlash_1()
 #### description ####
 Data Flash 0번 Page를 SRAM 내의 Data를 가지고 program한다.
 Parameter로 SRAM내 Data의 시작주소를 지정해야한다.
-이 함수를 수행하기 위해서는 SRAM에 program할 Data를 먼저 다운로드해 두어야한다.
+**이 함수를 수행하기 위해서는 SRAM에 program할 Data를 먼저 다운로드해 두어야한다.**
 #### systax ####
 progDataFlash_0( *startaddr* )
 #### example ####
@@ -170,10 +170,16 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.progDataFlash_0('20000000')
 ```
 ### progDataFlash_1 ###
 #### description ####
+Data Flash 1번 Page를 SRAM 내의 Data를 가지고 program한다.
+Parameter로 SRAM내 Data의 시작주소를 지정해야한다.
+**이 함수를 수행하기 위해서는 SRAM에 program할 Data를 먼저 다운로드해 두어야한다.**
 #### systax ####
+progDataFlash_1( *startaddr* )
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -183,10 +189,14 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.progDataFlash_1('20000000')
 ```
 ### dumpDataFlash ###
 #### description ####
+Data Flash내에 기록된 값을 읽어서 화면에 Hexadecimal 값으로 표시한다. 한줄에 32 바이트의 값을 표시하며 512 바이트 전체를 표시한다.
 #### systax ####
+dumpDataFlash()
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -196,10 +206,15 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.dumpDataFlash()
 ```
 ### dumpCodeFlash ###
 #### description ####
+Code Flash내에 기록된 값을 읽어서 화면에 Hexadecimal 값으로 표시한다. Dump할 Flash의 시작주소와 byte counts를 Parameter로 지정해주어야 한다.
+데이터 표시 방식은 다른 dump함수와 동일하게 한줄에 32바이트를 표시한다.
 #### systax ####
+dumpCodeFlash( *startaddr*, *count* )
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -209,10 +224,15 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.dumpCodeFlash( "10000000", 16*2048 )
 ```
 ### dumpSram ###
 #### description ####
+SRAM내에 기록된 값을 읽어서 화면에 Hexadecimal 값으로 표시한다. 
+16K byte 전체 영역의 값을 dump하는데, 데이터 표시 방식은 다른 dump함수와 동일하게 한줄에 32바이트를 표시한다.
 #### systax ####
+dumpSram()
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -222,10 +242,15 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.dumpSram()
 ```
 ### downloadDatatoSRAM ###
 #### description ####
+File내의 데이터를 SRAM으로 download 하는 함수이다.
+파라미터로 다운로드할 file의 이름을 지정한다.
 #### systax ####
+downloadDatatoSRAM( *filename* )
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -235,10 +260,16 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.downloadDatatoSRAM( 'a.bin' )
 ```
 ### downloadDataByXModem ###
 #### description ####
+Code Flash에 데이터를 다운로드할 때 XModem을 이용하는 함수이다.
+파라미터로 filename과 option값을 지정해야한다.
+
 #### systax ####
+downloadDataByXModem( *filename*, *option* )
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -248,10 +279,14 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+downlaodDataByXModem( 'a.bin', 'code' )
 ```
 ### resetSystem ###
 #### description ####
+ISP mode에서 빠져나오기 위해서 Software Reset을 하는 함수이다.
 #### systax ####
+resetSystem()
 #### example ####
 ```python
 from W7500isp import ispcmd
@@ -261,6 +296,8 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+isp.resetSystem()
 ```
 ### diffFiles ###
 #### description ####
@@ -277,4 +314,6 @@ import xmodem
 comport = serial.Serial('COM3', 460800)
 isp = ispcmd.ispcmd(comport)
 isp.checkisp()
+
+diffFiles( 'a.bin', 'dump.bin' )
 ```

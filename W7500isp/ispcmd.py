@@ -200,7 +200,7 @@ class ispcmd(object):
         return resp
     
     def dumpSram(self):
-        resp = self.writeCmd("DUMP 20000000 00001000", loopCnt=1025)
+        resp = self.writeCmd("DUMP 20000000 00004000", loopCnt=1025)
         return resp
 
     def downloadDatatoSRAM(self, filename):

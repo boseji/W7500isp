@@ -3,7 +3,7 @@ Created on 2019. 1. 10
 
 @author: javakys
 '''
-import unittest
+# import unittest
 import serial
 import time
 from xmodem import XMODEM
@@ -160,14 +160,18 @@ class ispcmd(object):
             time.sleep(1)
         return resp
 
-    def dumpCodeFlash(self, startAddr, Count):
+    def dumpCodeFlash(self, startAddr, Count, output=None, filename=None):
         # print(startAddr)
         int_startAddr = int(startAddr, 16)
         # print(int_startAddr)
         # print(Count)
         # loopCnt = Count / 4 + 1
         # print(loopCnt)
-        f = open('dumpfile.bin', 'wb')
+        if output is 'file':
+            if filename is None:
+                f = open('dumpfile.bin', 'wb')
+            else:
+                f = open(filename, 'wb')
         while Count > 0:
             if Count >= 2048:
                 byte_count = bytearray.fromhex('{:08X}'.format(2048))
@@ -182,8 +186,10 @@ class ispcmd(object):
             self.sendCmd("DUMP " + startAddr + " " + ''.join('{:02X}'.format(byte_count[i]) for i in range(0, 4)))
             for i in range(loopCnt):
                 addr, data = self.ser.readline().decode('utf-8').split(':')
-                # self.printDumpData(i, addr, data)
-                self.convertBytearray(f, data)
+                if output is not 'file':
+                    self.printDumpData(i, addr, data)
+                else:
+                    self.convertBytearray(f, data)
 
             resp = self.ser.readline().decode('utf-8')
             if(resp == '0\r\n'):
@@ -195,7 +201,8 @@ class ispcmd(object):
                 startAddr = ''.join('{:02X}'.format(byte_addr[i]) for i in range(0, 4))
             else:
                 break
-        f.close()
+        if output is 'file':
+            f.close()
 
         return resp
     

@@ -213,8 +213,10 @@ isp.dumpDataFlash()
 #### description ####
 Code Flash내에 기록된 값을 읽어서 화면에 Hexadecimal 값으로 표시한다. Dump할 Flash의 시작주소와 byte counts를 Parameter로 지정해주어야 한다.
 데이터 표시 방식은 다른 dump함수와 동일하게 한줄에 32바이트를 표시한다.
+output은 dump한 값을 화면에 출력할지, file로 저장할지를 지정하는 옵션으로 default값은 'None"이고 화면으로 출력한다.
+filename은 file에 저장하는 경우에 file의 이름을 지정하는 것이고, filename을 지정하지 않으면 'dumpfile.bin'이라는 이름으로 저장된다.
 #### systax ####
-dumpCodeFlash( *startaddr*, *count* )
+dumpCodeFlash( *startaddr*, *count*, *output=None*, *filename=None* )
 #### example ####
 ```python
 from W7500isp import ispcmd

@@ -71,7 +71,7 @@ class ispcmd(object):
         resp = resp + '\r\n'
         # print(loopCnt)
         # print(opt)
-        if opt is 0:
+        if opt == 0:
             for i in range(loopCnt):
                 respData = self.ser.readline()
                 respData = respData.decode('utf-8')
@@ -167,7 +167,7 @@ class ispcmd(object):
         # print(Count)
         # loopCnt = Count / 4 + 1
         # print(loopCnt)
-        if output is 'file':
+        if output == 'file':
             if filename is None:
                 f = open('dumpfile.bin', 'wb')
             else:
@@ -186,7 +186,7 @@ class ispcmd(object):
             self.sendCmd("DUMP " + startAddr + " " + ''.join('{:02X}'.format(byte_count[i]) for i in range(0, 4)))
             for i in range(loopCnt):
                 addr, data = self.ser.readline().decode('utf-8').split(':')
-                if output is not 'file':
+                if output != 'file':
                     self.printDumpData(i, addr, data)
                 else:
                     self.convertBytearray(f, data)
@@ -201,7 +201,7 @@ class ispcmd(object):
                 startAddr = ''.join('{:02X}'.format(byte_addr[i]) for i in range(0, 4))
             else:
                 break
-        if output is 'file':
+        if output == 'file':
             f.close()
 
         return resp
@@ -249,9 +249,9 @@ class ispcmd(object):
         self.xmodem = XMODEM(self.getc, self.putc)
 
     def Xmodem_Send(self, filename, option):
-        if option is 'code':
+        if option == 'code':
             cmd = "XPRG " + "10000000" + " " + "00020000" + "\r"
-        elif option is 'sram':
+        elif option == 'sram':
             cmd = "XPRG " + "20000000" + " " + "00000200" + "\r"
         # print(cmd)
         self.ser.write(cmd.encode('utf-8'))
@@ -261,8 +261,8 @@ class ispcmd(object):
         sys.stdout.write("%s\r\n" % self.xmodem.send(stream))
         stream.close()
 
-        sys.stdout.write("%s\r\n" % self.ser.readall())
-        sys.stdout.write("End XMODEM\r\n")
+        print(self.ser.readall())
+        print("End XMODEM")
         # print(len(self.srcbuf))
 
     def downloadDataByXModem(self, filename, option):
@@ -272,7 +272,7 @@ class ispcmd(object):
     def resetSystem(self):
         self.ser.write("REST\r".encode('utf-8')) 
         resp = self.ser.readline()
-        sys.stdout.write(resp + "\r\n")
+        print(resp)
         return resp
 
     def readSerial(self):

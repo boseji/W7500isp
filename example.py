@@ -62,7 +62,7 @@ if not target_dir.exists():
     raise SystemExit(1)
 ###
 # Main Program
-print('Starting comm on ' + PORT + ' @ ' + str(BAUD))
+print('\n\nStarting comm on ' + PORT + ' @ ' + str(BAUD))
 print(FNAME)
 
 # Added Timeout for faster Eject in case the boot fails
@@ -73,7 +73,9 @@ isp = ispcmd.ispcmd(comport)
 print("\n\n * Checking for Boot Mode :\n")
 print(" (Press the Boot and Reset together, keeping the Boot held release reset)")
 print(" (Release boot also once you see the 'Boot Mode Entered' message)\n") 
-isp.checkisp()
+if isp.checkisp() == 0:
+    print(" Error could not enter boot..")
+    raise SystemExit(2)
 
 print('\n * Lock Flags: \n')
 isp.readLockFlag()

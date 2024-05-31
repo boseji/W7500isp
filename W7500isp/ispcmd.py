@@ -37,8 +37,9 @@ class ispcmd(object):
     def __del__(self):
         self.serialClose()
         
-    def checkisp(self):
-        while True:
+    def checkisp(self, retries = 10):
+        tries = 0
+        while tries < retries:            
             try:
                 self.ser.write(str.encode('U'))
                 recv = self.ser.read()
@@ -52,14 +53,18 @@ class ispcmd(object):
 
                     self.ser.write('\r'.encode('utf-8'))
                     time.sleep(1)
-                    self.ser.read_all()          
+                    self.ser.read_all()
+                    tries = tries + 1
                     break
                 else :  
                     # print(recv)
                     sys.stdout.write('.\r\n')
                 time.sleep(1)
             except:
-                pass
+                tries = 0
+                break
+            tries = tries + 1
+        return tries
 
     def sendCmd(self, cmd, resp="0"):
         cmd = cmd + '\r'

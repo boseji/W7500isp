@@ -54,17 +54,15 @@ class ispcmd(object):
                     self.ser.write('\r'.encode('utf-8'))
                     time.sleep(1)
                     self.ser.read_all()
-                    tries = tries + 1
-                    break
+                    return True
                 else :  
                     # print(recv)
                     sys.stdout.write('.\r\n')
                 time.sleep(1)
             except:
-                tries = 0
-                break
+                return False
             tries = tries + 1
-        return tries
+        return False
 
     def sendCmd(self, cmd, resp="0"):
         cmd = cmd + '\r'
@@ -276,7 +274,7 @@ class ispcmd(object):
    
     def resetSystem(self):
         self.ser.write("REST\r".encode('utf-8')) 
-        resp = self.ser.readline()
+        resp = self.ser.read_all()
         print(resp)
         return resp
 

@@ -55,11 +55,6 @@ if not target_dir.exists():
     print("Error the file supplied does not exist")
     raise SystemExit(1)
 
-# Check Serial Port
-target_dir = Path(PORT)
-if not target_dir.exists():
-    print("Error the Serial Port supplied does not exists")
-    raise SystemExit(1)
 ###
 # Main Program
 print('\n\nStarting comm on ' + PORT + ' @ ' + str(BAUD))
@@ -73,7 +68,7 @@ isp = ispcmd.ispcmd(comport)
 print("\n\n * Checking for Boot Mode :\n")
 print(" (Press the Boot and Reset together, keeping the Boot held release reset)")
 print(" (Release boot also once you see the 'Boot Mode Entered' message)\n") 
-if isp.checkisp() == 0:
+if not isp.checkisp():
     print(" Error could not enter boot..")
     raise SystemExit(2)
 
@@ -83,11 +78,11 @@ isp.readLockFlag()
 print('\n * Erase All Flash: \n')
 isp.eraseFlashAll()
 
-print('\n * Programming Flash with ' + FNAME + '\n');
+print('\n * Programming Flash with ' + FNAME + '\n')
 isp.downloadDataByXModem( FNAME, 'code' )
 
 # Reset the MCU to start the Program
+print('\n * Reset Board: \n')
 isp.resetSystem()
 
-# Finally close port and Exit
-comport.close()
+print('\n * Done! \n')
